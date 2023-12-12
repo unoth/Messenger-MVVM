@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "933946400362",
+    "project_id": "messenger-4efcb",
+    "storage_bucket": "messenger-4efcb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933946400362:android:087436003053395dbeb413",
+        "android_client_info": {
+          "package_name": "com.unoth.messenger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvWxy3457wyq-AJEavTtUxr-we5WmEdcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
