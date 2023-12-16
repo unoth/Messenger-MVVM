@@ -13,4 +13,6 @@
     <string name="last_name">Last name</string>
     <string name="age">How old are you?</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="reset_password">RESET PASSWORD</string>
+    <string name="forgot_password_title">Forgot password?</string>
 </resources>
