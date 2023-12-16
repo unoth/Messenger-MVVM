@@ -72,8 +72,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
-                    //launch user screen
-                    Toast.makeText(LoginActivity.this, "user auth", Toast.LENGTH_SHORT).show();
+                    Intent intent = UsersActivity.newIntent(LoginActivity.this);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
