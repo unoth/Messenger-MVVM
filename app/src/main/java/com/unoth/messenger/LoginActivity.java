@@ -1,5 +1,6 @@
 package com.unoth.messenger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
@@ -79,6 +80,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+ public static Intent newIntent(Context context){
+        return new Intent(context, LoginActivity.class);
+ }
 
     private void initViews() {
         editTextEmail = findViewById(R.id.editTextEmail);
