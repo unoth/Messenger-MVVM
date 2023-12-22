@@ -9,17 +9,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UsersActivity extends AppCompatActivity {
     private UsersViewModel viewModel;
+    private UsersAdapter usersAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+        initViews();
         viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
         observeViewModel();
+
+//        List<User> userstest = new ArrayList<>();
+//        for (int i = 0; i < 30; i++) {
+//            User user = new User(
+//                    "id" + i, "name" + i, "lastname" + i, i, new Random().nextBoolean()
+//            );
+//            userstest.add(user);
+//        }
+//        usersAdapter.setUsers(userstest);
     }
 
     private void observeViewModel() {
@@ -33,6 +46,12 @@ public class UsersActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initViews() {
+        recyclerView = findViewById(R.id.recyclerViewUsers);
+        usersAdapter = new UsersAdapter();
+        recyclerView.setAdapter(usersAdapter);
     }
 
     @Override
