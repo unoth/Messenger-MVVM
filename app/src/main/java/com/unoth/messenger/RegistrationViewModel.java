@@ -53,17 +53,17 @@ public class RegistrationViewModel extends ViewModel {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         FirebaseUser firebaseUser = authResult.getUser();
-                        if (firebaseUser != null) {
-                            User user = new User(
-                                    firebaseUser.getUid(),
-                                    name,
-                                    lastName,
-                                    age,
-                                    false
-                            );
-                            databaseReferenceUser.child(user.getId()).setValue(user);
+                        if (firebaseUser == null) {
+                            return;
                         }
-
+                        User user = new User(
+                                firebaseUser.getUid(),
+                                name,
+                                lastName,
+                                age,
+                                false
+                        );
+                        databaseReferenceUser.child(user.getId()).setValue(user);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
