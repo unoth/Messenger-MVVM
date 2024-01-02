@@ -33,29 +33,7 @@ public class UsersActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
         observeViewModel();
 
-        for (int i = 0; i < 20; i++) {
-            User user = new User(
-                    "id" + i, "name" + i, "lastName" + i, i, false
-            );
-            myRef.push().setValue(user);
-        }
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    User value = dataSnapshot.getValue(User.class);
-                    Log.d("UsersActivity", value.toString());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
+        
     }
 
     private void observeViewModel() {
