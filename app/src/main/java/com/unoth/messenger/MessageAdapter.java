@@ -5,12 +5,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
+    private static final int VIEW_TYPE_MES_MY = 100;
+    private static final int VIEW_TYPE_MES_OTHER = 101;
+    private String currentUserId;
+
+    public MessageAdapter(String currentUserId) {
+        this.currentUserId = currentUserId;
+    }
 
     private List<Message> messages = new ArrayList<>();
 
@@ -22,8 +28,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_message_item, parent, false);
+        int layoutResId;
+        if (viewType == VIEW_TYPE_MES_MY) {
+            layoutResId = R.layout.my_message_item;
+        } else {
+            layoutResId = R.layout.other_message_item;
+        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
         return new MessageViewHolder(view);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Message message = messages.get(position);
+        if (message.getSenderId().equals(currentUserId)) {
+            return VIEW_TYPE_MES_MY;
+        } else {
+            return VIEW_TYPE_MES_OTHER;
+        }
     }
 
     @Override

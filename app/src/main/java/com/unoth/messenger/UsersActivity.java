@@ -16,9 +16,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class UsersActivity extends AppCompatActivity {
+    private static final String EXTRA_CURRENT_USER_ID = "current_id";
     private UsersViewModel viewModel;
     private UsersAdapter usersAdapter;
     private RecyclerView recyclerView;
+    private String currentUserId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,15 @@ public class UsersActivity extends AppCompatActivity {
         initViews();
         viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
         observeViewModel();
+
+        currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
+        usersAdapter.setOnUserClickListener(new UsersAdapter.OnUserClickListener() {
+            @Override
+            public void onUserClick(User user) {
+                Intent intent = ChatActivity.newIntent(UsersActivity.this, currentUserId, user.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void observeViewModel() {
@@ -68,7 +80,9 @@ public class UsersActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, UsersActivity.class);
+    public static Intent newIntent(Context context, String currentUserId) {
+        Intent intent = new Intent(context, UsersActivity.class);
+        intent.putExtra(EXTRA_CURRENT_USER_ID, currentUserId);
+        return intent;
     }
 }
