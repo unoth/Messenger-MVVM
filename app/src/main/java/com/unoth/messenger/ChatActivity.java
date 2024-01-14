@@ -67,8 +67,8 @@ public class ChatActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context context, String currentUserId, String otherUserId) {
         Intent intent = new Intent(context, ChatActivity.class);
-        intent.putExtra(EXTRA_OTHER_USER_ID, otherUserId);
         intent.putExtra(EXTRA_CURRENT_USER_ID, currentUserId);
+        intent.putExtra(EXTRA_OTHER_USER_ID, otherUserId);
         return intent;
     }
 }

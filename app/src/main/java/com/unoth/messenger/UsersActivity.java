@@ -22,7 +22,6 @@ public class UsersActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private String currentUserId;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
