@@ -13,12 +13,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private static final int VIEW_TYPE_MES_MY = 100;
     private static final int VIEW_TYPE_MES_OTHER = 101;
     private String currentUserId;
+    private List<Message> messages = new ArrayList<>();
 
     public MessageAdapter(String currentUserId) {
         this.currentUserId = currentUserId;
     }
-
-    private List<Message> messages = new ArrayList<>();
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;

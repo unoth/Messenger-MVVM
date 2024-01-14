@@ -2,12 +2,12 @@ package com.unoth.messenger;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +34,9 @@ public class ChatActivity extends AppCompatActivity {
         currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
         otherUserId = getIntent().getStringExtra(EXTRA_OTHER_USER_ID);
         messageAdapter = new MessageAdapter(currentUserId);
+        recyclerViewMessage.setAdapter(messageAdapter);
 
         //testing
-        recyclerViewMessage.setAdapter(messageAdapter);
         List<Message> messageList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Message message = new Message(
@@ -67,8 +67,8 @@ public class ChatActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context context, String currentUserId, String otherUserId) {
         Intent intent = new Intent(context, ChatActivity.class);
-        intent.putExtra(EXTRA_OTHER_USER_ID, otherUserId);
         intent.putExtra(EXTRA_CURRENT_USER_ID, currentUserId);
+        intent.putExtra(EXTRA_OTHER_USER_ID, otherUserId);
         return intent;
     }
 }

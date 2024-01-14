@@ -33,6 +33,7 @@
         android:id="@+id/recyclerViewMessage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/editTextMessage"
         app:layout_constraintTop_toBottomOf="@id/textViewTitle"
         tools:listitem="@layout/my_message_item" />
