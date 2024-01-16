@@ -74,7 +74,7 @@ public class ChatViewModel extends ViewModel {
         });
     }
 
-    public void SendMessage(Message message) {
+    public void sendMessage(Message message) {
         referenceMessage
                 .child(message.getSenderId())
                 .child(message.getReceiverId())
