@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -22,6 +24,8 @@ public class ChatActivity extends AppCompatActivity {
     private EditText editTextMessage;
     private ImageView imageViewSendMessage;
     private MessageAdapter messageAdapter;
+    private ChatViewModelFactory viewModelFactory;
+    private ChatViewModel viewModel;
     private String currentUserId;
     private String otherUserId;
 
@@ -33,28 +37,22 @@ public class ChatActivity extends AppCompatActivity {
 
         currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
         otherUserId = getIntent().getStringExtra(EXTRA_OTHER_USER_ID);
+        viewModelFactory = new ChatViewModelFactory(currentUserId, otherUserId);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(ChatViewModel.class);
         messageAdapter = new MessageAdapter(currentUserId);
         recyclerViewMessage.setAdapter(messageAdapter);
-
-        //testing
-        List<Message> messageList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Message message = new Message(
-                    currentUserId,
-                    otherUserId,
-                    "text " + i
-            );
-            messageList.add(message);
-        }
-        for (int i = 0; i < 10; i++) {
-            Message message = new Message(
-                    otherUserId,
-                    currentUserId,
-                    "text " + i
-            );
-            messageList.add(message);
-        }
-        messageAdapter.setMessages(messageList);
+        observeViewModel();
+        imageViewSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Message message = new Message(
+                        currentUserId,
+                        otherUserId,
+                        editTextMessage.getText().toString().trim()
+                );
+                viewModel.sendMessage(message);
+            }
+        });
     }
 
     private void initViews() {
@@ -63,6 +61,38 @@ public class ChatActivity extends AppCompatActivity {
         recyclerViewMessage = findViewById(R.id.recyclerViewMessage);
         editTextMessage = findViewById(R.id.editTextMessage);
         imageViewSendMessage = findViewById(R.id.imageViewSendMessage);
+    }
+
+    private void observeViewModel() {
+        viewModel.getMessages().observe(this, new Observer<List<Message>>() {
+            @Override
+            public void onChanged(List<Message> messages) {
+                messageAdapter.setMessages(messages);
+            }
+        });
+        viewModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String errorMessages) {
+                if (errorMessages != null) {
+                    Toast.makeText(ChatActivity.this, errorMessages, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        viewModel.getMessageSent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSent) {
+                if (isSent) {
+                    editTextMessage.setText("");
+                }
+            }
+        });
+        viewModel.getOtherUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                String userInfo = String.format("%s %s", user.getName(), user.getLastName());
+                textViewTitle.setText(userInfo);
+            }
+        });
     }
 
     public static Intent newIntent(Context context, String currentUserId, String otherUserId) {
