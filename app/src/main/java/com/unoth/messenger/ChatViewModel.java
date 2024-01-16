@@ -1,6 +1,7 @@
 package com.unoth.messenger;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,19 +26,19 @@ public class ChatViewModel extends ViewModel {
     private DatabaseReference referenceUser = firebaseDatabase.getReference("user");
     private DatabaseReference referenceMessage = firebaseDatabase.getReference("message");
 
-    public MutableLiveData<List<Message>> getMessages() {
+    public LiveData<List<Message>> getMessages() {
         return messages;
     }
 
-    public MutableLiveData<User> getOtherUser() {
+    public LiveData<User> getOtherUser() {
         return otherUser;
     }
 
-    public MutableLiveData<Boolean> getMessageSent() {
+    public LiveData<Boolean> getMessageSent() {
         return messageSent;
     }
 
-    public MutableLiveData<String> getError() {
+    public LiveData<String> getError() {
         return error;
     }
 
