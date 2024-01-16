@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class ChatActivity extends AppCompatActivity {
     private EditText editTextMessage;
     private ImageView imageViewSendMessage;
     private MessageAdapter messageAdapter;
+    private ChatViewModelFactory viewModelFactory;
+    private ChatViewModel viewModel;
     private String currentUserId;
     private String otherUserId;
 
@@ -33,28 +36,10 @@ public class ChatActivity extends AppCompatActivity {
 
         currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
         otherUserId = getIntent().getStringExtra(EXTRA_OTHER_USER_ID);
+        viewModelFactory = new ChatViewModelFactory(currentUserId, otherUserId);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(ChatViewModel.class);
         messageAdapter = new MessageAdapter(currentUserId);
         recyclerViewMessage.setAdapter(messageAdapter);
-
-        //testing
-        List<Message> messageList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Message message = new Message(
-                    currentUserId,
-                    otherUserId,
-                    "text " + i
-            );
-            messageList.add(message);
-        }
-        for (int i = 0; i < 10; i++) {
-            Message message = new Message(
-                    otherUserId,
-                    currentUserId,
-                    "text " + i
-            );
-            messageList.add(message);
-        }
-        messageAdapter.setMessages(messageList);
     }
 
     private void initViews() {
