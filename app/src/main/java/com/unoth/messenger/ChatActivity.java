@@ -34,7 +34,6 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         initViews();
-        observeViewModel();
 
         currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
         otherUserId = getIntent().getStringExtra(EXTRA_OTHER_USER_ID);
@@ -42,6 +41,7 @@ public class ChatActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this, viewModelFactory).get(ChatViewModel.class);
         messageAdapter = new MessageAdapter(currentUserId);
         recyclerViewMessage.setAdapter(messageAdapter);
+        observeViewModel();
         imageViewSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
