@@ -56,6 +56,7 @@
         android:id="@+id/imageViewSendMessage"
         android:layout_width="46dp"
         android:layout_height="46dp"
+        android:contentDescription="@string/send_message_voice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextMessage"
         app:layout_constraintTop_toTopOf="@+id/editTextMessage"

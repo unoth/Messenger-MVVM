@@ -18,4 +18,5 @@
     <string name="logout">Logout</string>
     <string name="resetLink">The reset link has been successfully sent</string>
     <string name="message">Message:</string>
+    <string name="send_message_voice">Send Message</string>
 </resources>
